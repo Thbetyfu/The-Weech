@@ -130,6 +130,81 @@ sequenceDiagram
     Dash-->>MCN: Menampilkan: "Diskon Lisensi Anda Rp1.500.000. Ini Top Talent Publik untuk direkrut!"
 ```
 
+### 🌍 D. Alur Keseluruhan (The Grand Architecture)
+Di bawah ini adalah gambaran "Mata Burung" (Bird's Eye View) bagaimana Klien Publik, Relawan Node, MCN, dan sistem mesin AI terdesentralisasi (Orchestrator) berinteraksi dalam satu ekosistem ekonomi tertutup secara serentak.
+
+```mermaid
+graph TD
+    %% Entitas Pengguna
+    subgraph Pengguna
+        C(🧑‍💻 Klien Publik)
+        MCN(🏢 Agensi/MCN)
+    end
+
+    %% Jaringan Node
+    subgraph Jaringan Node AI P2P
+        W1(💻 Node Relawan A - Gold)
+        W2(💻 Node Relawan B - Bronze)
+        WE(💻 Enterprise Node MCN)
+    end
+
+    %% Central Brain
+    subgraph Pusat Komando TheWeech
+        O[🧠 Orchestrator Load Balancer]
+        V{🛡️ The Vault NER}
+        CG[👮 Cheat Guard]
+        DB[(💾 Ledger & RBAC Database)]
+    end
+
+    %% Alur Kerja MCN & Publik
+    C -- "Single Prompt" --> O
+    MCN -- "Batch Prompts (API)" --> O
+    
+    %% Alur Pipa Orchestrator
+    O -- "1. Masking Sensitive Data" --> V
+    V -- "Masked Teks" --> CG
+    CG -- "Validasi Trafik/Auth" --> O
+
+    %% Smart Routing
+    O -- "2. Distribusi Tugas Ringan" --> W2
+    O -- "2. Distribusi Tugas Berat" --> W1
+    O -- "2. Distribusi Internal" --> WE
+
+    %% Proses AI Lokal
+    W1 -- "Ollama LLM" --> W1
+    W2 -- "Ollama LLM" --> W2
+    WE -- "Ollama LLM" --> WE
+
+    %% Pengiriman Kembali & Reward
+    W1 -- "3. Kirim Hasil Kesimpulan" --> O
+    W2 -- "3. Kirim Hasil Kesimpulan" --> O
+    WE -- "3. Kirim Hasil Kesimpulan" --> O
+
+    %% Demasking & Database
+    O -- "4. Demasking Teks" --> V
+    V -- "Simpan ke Saldo" --> DB
+
+    %% Ledger Split
+    DB -- "Komputasi W1 & W2 ➡️ Akun PRO" --> W1
+    DB -- "Komputasi WE ➡️ Diskon Lisensi" --> MCN
+
+    %% Matchmaking
+    DB -. "Talent Tracker (Matchmaking)" .-> MCN
+
+    %% Output Final
+    O -- "5. Kirim Hasil Akhir" --> C
+    O -- "5. Kirim Analisa Masal" --> MCN
+
+    %% Styling
+    classDef orchestrator fill:#2c3e50,stroke:#f39c12,stroke-width:3px,color:#fff
+    classDef worker fill:#34495e,stroke:#3498db,stroke-width:2px,color:#fff
+    classDef mcn fill:#8e44ad,stroke:#9b59b6,stroke-width:2px,color:#fff
+    
+    class O,V,CG,DB orchestrator
+    class W1,W2 worker
+    class WE,MCN mcn
+```
+
 ## ⚙️ 7. Setup dan Jalankan (Alpha Testnet)
 
 Lakukan di dua instansi terminal Windows/PowerShell (Makin banyak terminal Worker, Load Balancer semakin pintar).
