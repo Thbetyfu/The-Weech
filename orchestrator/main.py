@@ -18,6 +18,7 @@ from routes.worker_ws import router as worker_ws_router
 from routes.client_ws import router as client_ws_router
 from routes.health import router as health_router
 from routes.wallet import router as wallet_router
+from routes.b2b_agency import router as b2b_agency_router
 
 # Setup templates
 templates = Jinja2Templates(directory="templates")
@@ -49,6 +50,34 @@ async def trap_dispatcher(manager: ConnectionManager):
             except Exception as e:
                 worker.is_busy = False
 
+async def ledger_flusher(manager: ConnectionManager):
+    """
+    Fase Penambalan: Menulis Buffer Credits ke Disk (SQLite) secara batch
+    untuk menghilangkan Database Write Locking pada saat traffic Worker tinggi.
+    """
+    from routes.worker_ws import _record_ledger
+    import uuid
+    while True:
+        await asyncio.sleep(15) # Flush setiap 15 detik (di POC)
+        for worker in list(manager._workers.values()):
+            if worker.pending_credits > 0:
+                pts = worker.pending_credits
+                worker.pending_credits = 0  # Reset in memory buffer
+                
+                # Fase 5B: Pemisahan Jalur Distribusi (Discount vs Biasa)
+                target_id = worker.worker_id
+                if worker.is_enterprise and worker.agency_api_key:
+                    target_id = f"B2B:{worker.agency_api_key}"
+
+                asyncio.create_task(_record_ledger(
+                    worker_id=target_id,
+                    task_id=f"batch-{uuid.uuid4()}",
+                    complexity="BATCH",
+                    output_length=(pts - 10) * 10 # Dummy calc back
+                ))
+                # Di produksi aslinya _record_ledger bisa dimodifikasi agar langsung accept param 'credits_earned'
+                # tapi kita akali parameter output_length untuk POC agar menembus rumus.
+
 # --------------------------------------------------------------------------- #
 # Lifespan — setup & teardown
 # --------------------------------------------------------------------------- #
@@ -62,12 +91,14 @@ async def lifespan(app: FastAPI):
     manager = ConnectionManager()
     app.state.manager = manager
     
-    # Start Routine Cheat Guard
+    # Start Routine Cheat Guard & Ledger Flusher
     bg_task = asyncio.create_task(trap_dispatcher(manager))
+    flush_task = asyncio.create_task(ledger_flusher(manager))
     
     yield
     print("🛑 Orchestrator shutting down...")
     bg_task.cancel()
+    flush_task.cancel()
     await manager.disconnect_all()
 
 
@@ -109,6 +140,7 @@ app.include_router(health_router)
 app.include_router(worker_ws_router)
 app.include_router(client_ws_router)
 app.include_router(wallet_router)
+app.include_router(b2b_agency_router)
 
 # --------------------------------------------------------------------------- #
 # Run

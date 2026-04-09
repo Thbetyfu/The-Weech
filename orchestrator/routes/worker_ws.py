@@ -63,6 +63,7 @@ async def dispatch_task(body: DispatchRequest, request: Request):
     task_id = vault.create_session()
     worker.is_busy = True
     worker.current_complexity = complexity
+    worker.task_started_at = __import__('time').time()
 
     # Pipa Sanitasi NER untuk anonimisasi identitas (The Vault)
     masked_prompt = vault.mask_text(task_id, body.prompt)
@@ -77,12 +78,36 @@ async def dispatch_task(body: DispatchRequest, request: Request):
 
 
 @router.websocket("/ws/worker/{worker_id}")
-async def worker_endpoint(websocket: WebSocket, worker_id: str):
+async def worker_endpoint(
+    websocket: WebSocket, 
+    worker_id: str, 
+    token: str = None, 
+    is_enterprise: bool = False, 
+    agency_api_key: str = None
+):
     """
-    Endpoint WebSocket untuk setiap Worker Node.
+    Endpoint WebSocket untuk setiap Worker Node berserta Autentikasi dan Mode B2B.
     """
+    # 1. Zero-Trust Worker Auth Validation
+    EXPECTED_TOKEN = "WEECH-NODE-SECRET-2026"
+    if token != EXPECTED_TOKEN:
+        await websocket.close(code=1008, reason="Invalid Worker Authentication Token")
+        logger.warning(f"🔒 Intruder terblokir: Worker {worker_id} mencoba connect dengan invalid token {token}")
+        return
+
+    # Validasi API Key Agensi Jika Mode Enterprise Aktif
+    if is_enterprise and not agency_api_key:
+        await websocket.close(code=1008, reason="Enterprise Mode requires Agency API Key")
+        return
+
     manager = websocket.app.state.manager
     await manager.connect(worker_id, websocket)
+    
+    # Registrasi flag Enterprise ke In-Memory Manager
+    worker_info = manager.get_worker(worker_id)
+    if worker_info:
+        worker_info.is_enterprise = is_enterprise
+        worker_info.agency_api_key = agency_api_key
 
     import time
     async def adaptive_ping_loop():
@@ -101,6 +126,18 @@ async def worker_endpoint(websocket: WebSocket, worker_id: str):
             timeout = worker_info.get_adaptive_timeout()
             await asyncio.sleep(timeout)
             
+            # 4. Timeout Fallback System (Pendeteksi Ollama Crash di Klien)
+            if worker_info.is_busy and worker_info.task_started_at > 0:
+                elapsed = time.time() - worker_info.task_started_at
+                # Jika ollama tidak respon > 60 detik (bisa diatur batasannya)
+                if elapsed > 60.0:
+                    logger.error(f"☠️ TIMEOUT: Worker {worker_id} zombified (Hang {elapsed:.1f}s). Memutus paksa...")
+                    try:
+                        await websocket.close(code=1011, reason="Task Execution Timeout")
+                    except Exception:
+                        pass
+                    break
+
             if worker_info.waiting_pong:
                 worker_info.missed_pings += 1
                 logger.warning(f"⚠️ Worker {worker_id} missed ping (timeout: {timeout:.1f}s). Total missed: {worker_info.missed_pings}/3")
@@ -186,10 +223,12 @@ async def worker_endpoint(websocket: WebSocket, worker_id: str):
                 if worker_info:
                     comp = worker_info.current_complexity
                     worker_info.is_busy = False
+                    worker_info.task_started_at = 0.0
 
-                # Fase 3B: Catat Pekerjaan ke Ledger (Compute-to-Earn)
-                # Dilakukan secara asynchronous agar tidak memblokir event loop ws
-                asyncio.create_task(_record_ledger(worker_id, task_id, comp, len(unmasked_output)))
+                    # Fase Penambalan: Bottleneck DB -> Buffer InMemory (Redis-like)
+                    credits = 10 if comp == "EASY" else 50
+                    credits += min(100, len(unmasked_output) // 10)
+                    worker_info.pending_credits += credits
 
             elif msg_type == "error":
                 task_id = msg.get("task_id", "unknown")
@@ -207,6 +246,7 @@ async def worker_endpoint(websocket: WebSocket, worker_id: str):
                 worker_info = manager.get_worker(worker_id)
                 if worker_info:
                     worker_info.is_busy = False
+                    worker_info.task_started_at = 0.0
 
             elif msg_type == "register":
                 specs = msg.get("specs", {})

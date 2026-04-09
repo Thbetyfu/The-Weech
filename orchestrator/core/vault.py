@@ -51,13 +51,31 @@ class TheVault:
         session = self._sessions[session_id]
         masked_text = text
         
+        # 1. Regex Hardcode Armor (Fase Penambalan Privasi B2B)
+        import re
+        # Pola Kasar untuk Email, No HP (+62/08), atau Angka Panjang/No Rekening
+        regex_patterns = {
+            "EMAIL": r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+",
+            "PHONE": r"(\+62|62|0)8[1-9][0-9]{6,10}",
+            "NUMBERS": r"\b\d{10,16}\b"
+        }
+        
+        for label, pattern in regex_patterns.items():
+            for match in re.finditer(pattern, masked_text):
+                original_text = match.group(0)
+                if original_text not in session.entity_map:
+                    self.entity_counter += 1
+                    token = f"[{label}_{self.entity_counter}]"
+                    session.entity_map[original_text] = token
+                    session.token_map[token] = original_text
+
         if nlp:
-            # Tokenisasi dan Identifikasi Entitas NLP
-            doc = nlp(text)
+            # 2. Tokenisasi NLP (SpaCy) untuk Nama Orang & Tempat
+            doc = nlp(masked_text)
             for ent in doc.ents:
                 if ent.label_ in ("PERSON", "ORG", "GPE", "LOC"):
                     original_text = ent.text
-                    # Hindari duplikasi token untuk entitas yang sama
+                    # Hindari duplikasi token
                     if original_text not in session.entity_map:
                         self.entity_counter += 1
                         token = f"[{ent.label_}_{self.entity_counter}]"

@@ -35,6 +35,10 @@ WORKER_NAME = os.getenv("WORKER_NAME", platform.node())
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 
+# Skema Ekstensi B2B (MCN Node)
+IS_ENTERPRISE = os.getenv("ENTERPRISE_MODE", "false").lower() == "true"
+AGENCY_API_KEY = os.getenv("AGENCY_API_KEY", "")
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -92,7 +96,10 @@ def get_specs() -> dict:
 # Main WebSocket loop
 # --------------------------------------------------------------------------- #
 async def run_worker():
-    ws_url = f"{ORCHESTRATOR_WS_URL}/{WORKER_ID}"
+    ws_url = f"{ORCHESTRATOR_WS_URL}/{WORKER_ID}?token=WEECH-NODE-SECRET-2026"
+    if IS_ENTERPRISE:
+        ws_url += f"&is_enterprise=true&agency_api_key={AGENCY_API_KEY}"
+        
     logger.info(f"🔗 Connecting to Orchestrator: {ws_url}")
 
     while True:  # auto-reconnect loop

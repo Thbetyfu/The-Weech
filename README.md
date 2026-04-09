@@ -34,7 +34,8 @@ TheWeech/
 │   │   └── connection_manager.py # Smart Routing & Telemetry Worker
 │   ├── routes/             
 │   │   ├── wallet.py       # API Sistem Gamifikasi & Billing
-│   │   └── worker_ws.py    # Tunnel Komunikasi WebSocket P2P
+│   │   ├── worker_ws.py    # Tunnel Komunikasi WebSocket P2P
+│   │   └── b2b_agency.py   # Eksekutif API MCN & Radar Matchmaking
 │   └── templates/          # Frontend Dashboard (HTML/JS)
 ├── worker-node/            ← Klien Desktop untuk Relawan Komunitas
 │   └── worker.py           # Menjalankan Ollama & Melapor Status Hardware
@@ -52,6 +53,10 @@ Klien masuk ke dashboard TheWeech untuk meminta **Analisis User DNA** (menganali
 ### B. Relawan Node (Kasta Bronze, Silver, Gold)
 Seorang relawan (misal: Rendi) menyalakan script `worker.py` di Laptop *Gaming* miliknya. Laptop Rendi dideteksi memiliki RAM dan CPU tinggi (Kasta Gold). Begitu ada tugas analisis berat dari Klien SaaS, Orchestrator langsung menembakkannya ke laptop Rendi.
 Rendi rebahan dan membiarkan layar laptop bekerja, sementara indikator poin TheWeech Wallet-nya terus mendulang puluhan **Kredit Komputasi** secara live, yang besoknya bisa ia *Redeem* (Tukarkan) untuk mencoba fitur-fitur berbayar.
+
+### C. Agensi Perusahaan / MCN (Enterprise Edition)
+Sebuah Agensi Manajemen Kreator menyewa server/PC bertenaga tinggi untuk dipasangkan *Enterprise Mode* TheWeech. Semua poin komputasi yang mereka sumbangkan langsung dikonversi otomatis menjadi **Potongan Diskon Lisensi Tahunan**. 
+Agensi juga memegang Radar *Matchmaking* via `http://127.0.0.1:8000/agency` untuk mengintai kreator/relawan publik dengan nilai komputasi tertinggi *(Top Contributor)* untuk dijadikan daftar kandidat perekrutan bakat TheWeech!
 
 ## 🔄 6. Flow Chart (Alur Arsitektur Resolusi Tinggi)
 
@@ -115,7 +120,11 @@ python -m venv .venv
 pip install -r requirements.txt
 copy .env.example .env
 
-# Jalankan Node
+# Mode Biasa (Pencetak Koin Pro):
+python worker.py
+
+# Mode Enterprise B2B (Diskon Penagihan MCN):
+# Pastikan di file .env `ENTERPRISE_MODE=true` dan `AGENCY_API_KEY=KUNCI-ANDA`
 python worker.py
 ```
 

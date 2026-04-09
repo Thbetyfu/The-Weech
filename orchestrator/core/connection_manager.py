@@ -23,11 +23,21 @@ class WorkerInfo:
         self.specs: dict = {}
         self.current_complexity: str = "EASY"
         
+        # Ekstensi Fase 5: Skema B2B (Enterprise Node)
+        self.is_enterprise: bool = False
+        self.agency_api_key: str | None = None
+        
         # Adaptive Heartbeat Stats (Sprint 2B)
         self.rtt_history: list[float] = []
         self.waiting_pong: bool = False
         self.ping_sent_at: float = 0.0
         self.missed_pings: int = 0
+        
+        # Buffer Ledger Cache (Fase 4 - Mengurangi Write Bottleneck)
+        self.pending_credits: int = 0
+        
+        # Timeout Watcher (Fase Penambalan - Zombification Prevention)
+        self.task_started_at: float = 0.0
 
     def add_rtt(self, rtt: float):
         self.rtt_history.append(rtt)
@@ -70,6 +80,17 @@ class ConnectionManager:
         async with self._lock:
             self._workers.pop(worker_id, None)
         logger.info(f"❌ Worker '{worker_id}' disconnected. Total: {len(self._workers)}")
+
+    async def disconnect_all(self) -> None:
+        """Membersihkan semua koneksi secara paksa pada saat server shutdown."""
+        async with self._lock:
+            for worker in list(self._workers.values()):
+                try:
+                    await worker.websocket.close(code=1001)
+                except:
+                    pass
+            self._workers.clear()
+        logger.info("🧹 Semua Worker telah diputus jaringannya karena shutdown.")
 
     def get_best_idle_worker(self, complexity: str = "EASY") -> WorkerInfo | None:
         """
