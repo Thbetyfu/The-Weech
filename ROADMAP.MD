@@ -33,6 +33,20 @@ Sistem keamanan **Zero-Data-Leak**. Menggunakan Named Entity Recognition (NER) u
 
 ---
 
+## Fase 0: Penjahitan (Stitching) Aset Desain UI/UX Murni
+> Berjalan secara Paralel dengan Fase 1-5.
+> **Deskripsi:** Menyadari bahwa Mockup / Prototype UI & UX yang *High-Fidelity* dari sisi Klien (Dashboard Utama) dan Agensi (B2B) ternyata **sudah dimiliki dan disiapkan sebelumnya oleh pihak Stakeholder (User)**. 
+
+### 0.1 Task Utama
+
+#### A. Konversi Aset ke Sistem Templat Jinja2
+Mentranslasikan struktur tata letak (HTML/CSS/JS) buatan User ke dalam mesin templat dinamis backend (Jinja2 FastAPI), memastikan semua tombol, rute *Hyperlink*, dan variabel data (*Context Variables*) yang disiapkan User bisa membaca data *Life-Telemetry* dari Node secara langsung.
+
+#### B. Implementasi State Dinamis
+Menyambungkan komponen Visual bawaan User (seperti Indikator Baterai/Koin, Animasi Glassmorphism yang sudah rapi) kepada soket data asli dari Orchestrator (*WebSocket Streams*). Mengubah data *dummy* statis di desain awal menjadi aliran real-time logika sistem *Backend*.
+
+---
+
 ## Fase 1: Pembuktian Konsep (Proof of Concept) & Sandbox Lokal
 
 > Fokus utama: Membangun miniatur jaringan yang berfungsi di lingkungan tertutup sebelum membukanya ke internet. Membuktikan bahwa distribusi komputasi ini memungkinkan dan stabil secara teknis.
