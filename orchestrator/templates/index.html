@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheWeech | AI Mesh Monitor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --accent-color: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            flex-grow: 1;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .card h2 {
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            color: white;
+            font-family: inherit;
+            resize: none;
+            margin-bottom: 1.5rem;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button {
+            width: 100%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 14px 0 var(--accent-glow);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #response-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            min-height: 200px;
+            max-height: 500px;
+            overflow-y: auto;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .worker-list {
+            list-style: none;
+        }
+
+        .worker-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-idle { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .status-busy { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+
+        .loading-dots:after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80% { content: '...'; }
+        }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TheWeech Mesh</h1>
+        <p style="color: var(--text-secondary)">Decentralized physical infrastructure network for local AI</p>
+    </header>
+
+    <div class="container">
+        <!-- Dashboard / Worker Status -->
+        <div class="card">
+            <h2>🌍 Active Node</h2>
+            <div id="worker-container" class="worker-list">
+                <p style="color: var(--text-secondary)">Scanning for nodes...</p>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <h3>📊 Performance</h3>
+                <div style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 1rem;">
+                        <div style="color: var(--text-secondary); font-size: 0.8rem;">Target TTFT</div>
+                        <div style="font-weight: 600;">&lt; 1.5s</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 1rem;">
+                        <div style="color: var(--text-secondary); font-size: 0.8rem;">Current Model</div>
+                        <div style="font-weight: 600; color: #3b82f6;">Gemma:2b</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 4: GAMIFIKASI & WALLET -->
+            <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(145deg, rgba(16, 185, 129, 0.05), rgba(0,0,0,0.5)); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 1rem;">
+                <h3>💳 TheWeech Wallet (Verified)</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Kumpulkan kredit komputasi untuk ditukar dengan paket <b>Pro Monthly</b>.
+                </p>
+                <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 0.5rem;">
+                    <div>
+                        <span id="wallet-balance" style="font-size: 2rem; font-weight: 800; color: #10b981;">0</span>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">/ 5000 Kredit</span>
+                    </div>
+                    <button id="redeem-btn" style="background: transparent; border: 1px solid #10b981; color: #10b981; padding: 0.5rem 1rem; font-size: 0.8rem; opacity: 0.5; pointer-events: none;">Redeem Pro</button>
+                </div>
+                <!-- Progress Bar -->
+                <div style="width: 100%; background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                    <div id="wallet-progress" style="width: 0%; height: 100%; background: #10b981; transition: width 0.5s ease-out;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Interface -->
+        <div class="card">
+            <h2>🧠 Dispatch Task</h2>
+            <textarea id="prompt-input" placeholder="Enter instructions for the AI network..."></textarea>
+            <button id="send-btn">Process on Mesh</button>
+
+            <div style="margin-top: 2rem;">
+                <h3>📝 Response</h3>
+                <div id="response-box" style="margin-top: 1rem;">
+                    Waiting for input...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const workerContainer = document.getElementById('worker-container');
+        const promptInput = document.getElementById('prompt-input');
+        const sendBtn = document.getElementById('send-btn');
+        const responseBox = document.getElementById('response-box');
+
+        // Refresh Worker Status
+        async function updateStatus() {
+            try {
+                const res = await fetch('/health');
+                const data = await res.json();
+                
+                if (data.workers.length === 0) {
+                    workerContainer.innerHTML = '<p style="color: var(--text-secondary)">No workers connected. Run worker.py.</p>';
+                    return;
+                }
+
+                workerContainer.innerHTML = data.workers.map(w => `
+                    <div class="worker-item">
+                        <div>
+                            <div style="font-weight: 600;">${w.id}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary)">
+                                💻 ${w.specs?.os || 'Unknown OS'} | 🧠 ${w.specs?.cpu_cores || '?'} Cores | 🚀 ${w.specs?.ram_gb || '?'} GB RAM
+                            </div>
+                            <div style="font-size: 0.75rem; color: #10b981; margin-top: 4px;">
+                                Model: ${w.specs?.ollama_model || 'Unknown'}
+                            </div>
+                        </div>
+                        <span class="status-badge ${w.is_busy ? 'status-busy' : 'status-idle'}">
+                            ${w.is_busy ? 'Processing' : 'Idle'}
+                        </span>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error("Health fetch error", e);
+            }
+            
+            // FASE 4: Update Wallet (hanya contoh bind ke worker pertama di POC ini)
+            try {
+                const healthRaw = await fetch('/health');
+                const healthData = await healthRaw.json();
+                if (healthData.workers.length > 0) {
+                    const wid = healthData.workers[0].id;
+                    const wRes = await fetch(`/api/v1/wallet/${wid}`);
+                    const wData = await wRes.json();
+                    
+                    document.getElementById('wallet-balance').innerText = wData.verified_balance;
+                    document.getElementById('wallet-progress').style.width = wData.progress_percent + '%';
+                    
+                    const redeemBtn = document.getElementById('redeem-btn');
+                    if (wData.verified_balance >= 5000) {
+                        redeemBtn.style.opacity = '1';
+                        redeemBtn.style.pointerEvents = 'auto';
+                        redeemBtn.style.background = '#10b981';
+                        redeemBtn.style.color = '#fff';
+                        redeemBtn.onclick = async () => {
+                            redeemBtn.innerHTML = '⏳ Burning...';
+                            try {
+                                const r = await fetch('/api/v1/wallet/redeem', {
+                                    method: 'POST',
+                                    headers: {'Content-Type': 'application/json'},
+                                    body: JSON.stringify({worker_id: wid, package: 'PRO_MONTHLY'})
+                                });
+                                const rData = await r.json();
+                                if(r.ok) {
+                                    alert("🎉 " + rData.message);
+                                    updateStatus();
+                                } else {
+                                    alert("Gagal: " + rData.detail);
+                                }
+                            } catch (e) { alert("Error: " + e); }
+                            redeemBtn.innerHTML = 'Redeem Pro';
+                        };
+                    } else {
+                        redeemBtn.style.opacity = '0.5';
+                        redeemBtn.style.pointerEvents = 'none';
+                        redeemBtn.style.background = 'transparent';
+                        redeemBtn.style.color = '#10b981';
+                    }
+                }
+            } catch(we) { console.error("Wallet error", we); }
+        }
+
+        setInterval(updateStatus, 3000);
+        updateStatus();
+
+        // State Machine UI (Task D3)
+        const uiStates = {
+            IDLE: { btnTxt: 'Process on Mesh', boxTxt: 'Waiting for input...', disableBtn: false },
+            QUEUED: { btnTxt: '🕒 In Queue...', boxTxt: '<span class="loading-dots" style="color:var(--text-secondary)">Waiting for available worker</span>', disableBtn: true },
+            PROCESSING: { btnTxt: '⚙️ AI Computing...', boxTxt: '<span class="loading-dots" style="color:var(--text-secondary)">Worker is analyzing</span>', disableBtn: true },
+            STREAMING: { btnTxt: '📝 Receiving Data...', boxTxt: '', disableBtn: true }, // Box text ditangani terpisah
+            DONE: { btnTxt: '✅ Done (Process on Mesh)', boxTxt: '', disableBtn: false },
+            ERROR: { btnTxt: '🔄 Retry Process', boxTxt: '', disableBtn: false }
+        };
+
+        function setUIState(stateKey, customError = null) {
+            const st = uiStates[stateKey];
+            if (!st) return;
+            
+            sendBtn.innerHTML = st.btnTxt;
+            sendBtn.disabled = st.disableBtn;
+            if (stateKey !== 'STREAMING' && stateKey !== 'DONE' && stateKey !== 'ERROR') {
+                responseBox.innerHTML = st.boxTxt;
+            } else if (stateKey === 'ERROR') {
+                responseBox.innerHTML = `<span style="color: #ef4444">❌ Error: ${customError || "Network / System failure"}</span>`;
+            }
+        }
+
+        // Send Task
+        sendBtn.onclick = async () => {
+            const prompt = promptInput.value.trim();
+            if (!prompt) return;
+
+            // Transisi State -> QUEUED
+            setUIState('QUEUED');
+            
+            try {
+                // Defensive: Cek apakah orchestrator sehat
+                const res = await fetch('/api/v1/dispatch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+
+                if (res.status === 503) {
+                    setUIState('ERROR', "No idle workers available.");
+                    return;
+                } else if (!res.ok) {
+                    setUIState('ERROR', "Orchestrator rejected the task.");
+                    return;
+                }
+
+                const data = await res.json();
+                
+                // Transisi State -> PROCESSING (Task sedang dikerjakan)
+                setUIState('PROCESSING');
+                responseBox.innerHTML = `<span style="color: var(--accent-color)">Task <b>${data.task_id}</b></span> dispatched to <b>${data.worker_id}</b>.<br><br>Memproses data anonim...<span class="loading-dots"></span>`;
+                
+                // Buka Pipa Stream WebSocket ke API Gateway
+                // Defensive: Pastikan protocol wss atau ws sesuai hostname
+                const wsProto = window.location.protocol === "https:" ? "wss:" : "ws:";
+                const clientWs = new WebSocket(`${wsProto}//${window.location.host}/ws/client/${data.task_id}`);
+                
+                clientWs.onmessage = (event) => {
+                    try {
+                        const msg = JSON.parse(event.data);
+                        if (msg.type === "result") {
+                            // Transisi State -> DONE
+                            setUIState('DONE');
+                            // Format \n jadi <br>
+                            responseBox.innerHTML = `<div>${msg.output.replace(/\\n/g, '<br>')}</div>`;
+                            clientWs.close(); // Prevent memory leak
+                        } else if (msg.type === "error") {
+                            setUIState('ERROR', msg.message);
+                            clientWs.close();
+                        }
+                    } catch(err) {
+                        console.error("Gagal parsing stream: ", err);
+                    }
+                };
+                
+                clientWs.onerror = (err) => {
+                    console.error("Client WS Error:", err);
+                    setUIState('ERROR', "WebSocket connection failed.");
+                };
+
+            } catch (e) {
+                console.error(e);
+                setUIState('ERROR', "Gagal terhubung ke API Gateway.");
+            }
+        };
+    </script>
+</body>
+</html>
