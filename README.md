@@ -46,7 +46,21 @@ TheWeech/
 └── README.md               ← File dokumentasi ini
 ```
 
-## 👥 5. Use Case TheWeech
+## 🖥️ 5. Apa yang Harus Saya Download? (Dua Wujud Aplikasi)
+
+Ekosistem TheWeech menelurkan **dua wujud software** yang berbeda. Kebutuhan *download* Anda bergantung pada peran Anda di dalam ekosistem ini:
+
+### 1. Saya adalah Konsumen / Klien / Manajer Agensi
+- **Bentuk Aplikasi:** Website Web-App (SaaS)
+- **Apa yang harus didownload?** **Tidak perlu download apa pun.** Anda cukup membuka browser (Chrome/Safari) dan masuk ke URL web TheWeech (misal: `app.theweech.id`) layaknya membuka Netflix atau Spotify. Semua UI/UX cantik akan langsung tampil di layar Anda.
+
+### 2. Saya adalah Relawan Node / Penambang Poin
+- **Bentuk Aplikasi:** Aplikasi Desktop *(Headless/System-Tray)*
+- **Apa yang harus didownload?** Anda harus men-download **Installer TheWeech Worker** untuk komputer/laptop Windows Anda. Aplikasi ini akan berjalan diam-diam di latar belakang (*background task*) dan meminta Anda mengunduh [Ollama](https://ollama.com/) agar laptop Anda resmi terhubung ke *Mesh Network*.
+
+---
+
+## 👥 6. Use Case TheWeech
 ### A. Klien SaaS (Misal: Manajer Kreator / UMKM)
 Klien masuk ke dashboard TheWeech untuk meminta **Analisis User DNA** (menganalisis 500 komentar audiens YouTube mereka). Klien ini tidak tahu menahu soal mesin yang memproses. Di mata mereka, TheWeech dengan cepat menyediakan insight matang dalam antarmuka web modern dengan kecepatan kurang dari hitungan detik.
 
@@ -58,7 +72,7 @@ Rendi rebahan dan membiarkan layar laptop bekerja, sementara indikator poin TheW
 Sebuah Agensi Manajemen Kreator menyewa server/PC bertenaga tinggi untuk dipasangkan *Enterprise Mode* TheWeech. Semua poin komputasi yang mereka sumbangkan langsung dikonversi otomatis menjadi **Potongan Diskon Lisensi Tahunan**. 
 Agensi juga memegang Radar *Matchmaking* via `http://127.0.0.1:8000/agency` untuk mengintai kreator/relawan publik dengan nilai komputasi tertinggi *(Top Contributor)* untuk dijadikan daftar kandidat perekrutan bakat TheWeech!
 
-## 🔄 6. Flow Chart (Alur Arsitektur Resolusi Tinggi)
+## 🔄 7. Flow Chart (Alur Arsitektur Resolusi Tinggi)
 
 Arsitektur jaringan syaraf buatan TheWeech dibagi dengan sangat rapi berdasarkan siapa yang menatap layar *(User Persona)*. Berikut adalah peta aliran informasi untuk ketiga kasta pengguna tersebut:
 
@@ -205,7 +219,7 @@ graph TD
     class WE,MCN mcn
 ```
 
-## ⚙️ 7. Setup dan Jalankan (Alpha Testnet)
+## ⚙️ 8. Setup dan Jalankan (Alpha Testnet)
 
 Lakukan di dua instansi terminal Windows/PowerShell (Makin banyak terminal Worker, Load Balancer semakin pintar).
 
