@@ -60,31 +60,74 @@ Agensi juga memegang Radar *Matchmaking* via `http://127.0.0.1:8000/agency` untu
 
 ## 🔄 6. Flow Chart (Alur Arsitektur Resolusi Tinggi)
 
+Arsitektur jaringan syaraf buatan TheWeech dibagi dengan sangat rapi berdasarkan siapa yang menatap layar *(User Persona)*. Berikut adalah peta aliran informasi untuk ketiga kasta pengguna tersebut:
+
+### 🧩 A. Alur Klien SaaS Biasa (Konsumen)
+Klien menginginkan kecepatan tanpa friksi. Ia mengetik dari browser, dan TheWeech di belakang layar bekerja keras mendistribusikannya dan menjamin rahasia privasi klien aman.
+
 ```mermaid
 sequenceDiagram
     autonumber
-    actor C as Client (SaaS UI)
-    participant O as Orchestrator
-    participant V as The Vault (NER)
-    participant CG as Cheat Guard
-    participant D as DB Ledger
-    participant W as Worker Node (Laptop)
+    actor Client as 🧑‍💻 Klien (Web UI)
+    participant Orch as 🧠 Orchestrator
+    participant Vault as 🛡️ The Vault (NER Guard)
+    participant Mesh as 🌐 AI Mesh Network
 
-    C->>O: "Buatkan ide konten untuk Budi di Jakarta!"
-    O->>V: Teruskan Prompt Asli
-    V-->>O: Prompt Tersensor: "Buatkan ide untuk [PERSON_1] di [GPE_1]!"
-    
-    O->>CG: Cek Algoritma (Bukan Jebakan)
-    O->>O: Smart Routing (Cari Hardware Terbaik)
-    
-    O->>W: Push Task via WebSocket
-    W->>W: Kalkulasi LLM Lokal (Ollama)
-    W-->>O: Kirim Hasil AI
-    
-    O->>V: De-masking ([PERSON_1] kembali jadi Budi)
-    O->>D: Transaksi ACID: +50 Kredit diberikan ke Dompet Worker
-    
-    O-->>C: Stream UI Glassmorphism (Hasil Mulus & Cepat)
+    Client->>Orch: Minta Analisa Sentimen Komentar YouTube
+    Note over Orch: (Menerima Request HTTP)
+    Orch->>Vault: Serahkan teks mentah
+    Vault-->>Orch: Teks TERSENSOR (Budi -> [PERSON_1])
+    Orch->>Mesh: Routing ke Worker tercepat & idle
+    Mesh-->>Orch: Mengembalikan kesimpulan analisa JSON
+    Orch->>Vault: De-Masking (Kembalikan data [PERSON_1] ke Budi)
+    Orch-->>Client: ⚡ Render UI Premium Glassmorphism (Hasil Instan)
+```
+
+### 🧩 B. Alur Relawan Node Kreator (Compute-to-Earn)
+Para pemancing kredit komputasi menyalakan perangkat *gaming* / PC mereka. Inilah yang terjadi pada mesin mereka dari awal menyala hingga berhasil menebus diskon pro.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Creator as 💻 Relawan (Worker Node)
+    participant CG as 👮 Cheat Guard
+    participant DB as 💾 Ledger Database
+    participant API as 🏦 Wallet API
+
+    Creator->>CG: Request Koneksi WebSocket (Bawa Token Zero-Trust)
+    CG-->>Creator: Token Sah! Mengukur RAM & CPU (Telemetry)
+    Note over Creator: Worker dalam status IDLE menunggu tugas
+    CG->>Creator: PUSH TUGAS: "Sederhanakan Paragraf ini!"
+    Creator->>Creator: Memanggil Local Ollama (Inferensi Hardware)
+    Creator-->>CG: Mengirimkan Teks Output AI
+    CG->>DB: Konversi Kompleksitas CPU -> Integer (Kredit)
+    Note over DB: Worker Buffer += 50 Koin
+    Creator->>API: Ajukan Redeem Paket Pro (Rp99.000)
+    API->>DB: Cek kecukupan saldo komputasi (Transactional Lock)
+    DB-->>API: Saldo Dipotong (Burn)
+    API-->>Creator: 🎉 Status Akses Terbuka! Kini jadi Akun Pro.
+```
+
+### 🧩 C. Alur Klien B2B Enterprise MCN (Agensi & Skema Diskon)
+Agensi tidak bermain di kelas satuan. Mereka menembak ratusan *prompt* sekali tekan, lalu menyalakan server kantor mereka untuk mencetak diskon tagihan Rupiah masal.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor MCN as 🏢 Manajer MCN
+    participant Dash as 🎛️ B2B Dashboard
+    participant EntNode as 💻 Server Kantor MCN (Enterprise Mode)
+    participant RBAC as 🔑 RBAC Guard & Ledger
+
+    MCN->>Dash: Upload 50 Profil Talent via Batch Processing
+    Dash->>RBAC: Verifikasi API-Key Agensi MCN
+    RBAC-->>Dash: Sah (Status Enterprise)
+    Dash->>Dash: Sebar 50 Tugas ke Seluruh Mesh Publik
+    Note left of EntNode: Server Kantor Bekerja menambang secara terpisah
+    EntNode->>RBAC: Menyerahkan Hasil AI via socket berlabel "is_enterprise: true"
+    RBAC->>RBAC: Hitung Komputasi -> Salurkan ke Poin Potongan Rupiah Agensi
+    MCN->>Dash: Cek /discount-status & /matchmaking
+    Dash-->>MCN: Menampilkan: "Diskon Lisensi Anda Rp1.500.000. Ini Top Talent Publik untuk direkrut!"
 ```
 
 ## ⚙️ 7. Setup dan Jalankan (Alpha Testnet)
