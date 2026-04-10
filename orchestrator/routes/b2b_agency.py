@@ -24,7 +24,7 @@ async def agency_dashboard(request: Request):
     Menampilkan dasbor manajemen Agensi (Portal Eksekutif B2B).
     Menyoroti gaya UX/UI Premium Glassmorphism.
     """
-    return templates.TemplateResponse("agency.html", {"request": request})
+    return templates.TemplateResponse("agency/index.html", {"request": request})
 
 @router.post("/api/v1/agency/batch")
 async def agency_batch_dispatch(payload: BatchDispatchRequest, request: Request):

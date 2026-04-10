@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B Agency Dashboard | TheWeech AI Mesh</title>
+    <!-- Premium Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Clean External CSS -->
+    <link rel="stylesheet" href="/static/css/agency.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="brand-title">TheWeech MCN Portal</h1>
+        <div class="tier-badge">Enterprise Edition ✨</div>
+    </header>
+
+    <main>
+        <!-- Kontrol Komando B2B -->
+        <section class="glass-panel">
+            <h2 class="panel-title">🛡️ Mass Batch-Processing</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">
+                Kirim ratusan prompt strategi konten kreator secara paralel. Sistem akan mendistribusikannya ke seluruh TheWeech AI Mesh Network.
+            </p>
+
+            <div class="auth-box">
+                <input type="password" id="api-key" placeholder="Enter Agency API Key..." autocomplete="off">
+            </div>
+
+            <textarea id="batch-prompts" rows="8" placeholder="Masukkan prompts, pisahkan dengan baris baru (ENTER) untuk setiap tugas. Contoh:
+Buatkan strategi hook untuk skincare umur 20an.
+Buatkan matrix UGC untuk channel gaming."></textarea>
+            
+            <button id="btn-dispatch" class="btn-launch">
+                🚀 Launch Batch Payload
+            </button>
+        </section>
+
+        <!-- Monitoring Mesh Uptime -->
+        <section class="glass-panel">
+            <h2 class="panel-title">📡 Live Mesh Telemetry</h2>
+            
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Tasks Dispatched</span>
+                    <span class="stat-value value-primary" id="stat-dispatched">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Network Backlog</span>
+                    <span class="stat-value" id="stat-backlog" style="color: #ffa502;">0</span>
+                </div>
+            </div>
+
+            <div class="log-window" id="terminal-log">
+                <div>[SYSTEM] MCN Dashboard initialized. Waiting for API Key verification...</div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const apiKeyInput = document.getElementById('api-key');
+        const promptsInput = document.getElementById('batch-prompts');
+        const dispatchBtn = document.getElementById('btn-dispatch');
+        const logWindow = document.getElementById('terminal-log');
+        const statDispatched = document.getElementById('stat-dispatched');
+        const statBacklog = document.getElementById('stat-backlog');
+
+        function appendLog(msg, type = 'info') {
+            const el = document.createElement('div');
+            el.className = `log-entry ${type}`;
+            const time = new Date().toLocaleTimeString();
+            el.textContent = `[${time}] ${msg}`;
+            logWindow.appendChild(el);
+            logWindow.scrollTop = logWindow.scrollHeight;
+        }
+
+        dispatchBtn.addEventListener('click', async () => {
+            const key = apiKeyInput.value.trim();
+            const rawPrompts = promptsInput.value.trim();
+
+            if (!key) return appendLog("❌ API Key tidak boleh kosong!", "error");
+            if (!rawPrompts) return appendLog("❌ Payload prompt tidak boleh kosong!", "error");
+
+            // Pisahkan berdasar baris
+            const promptsArray = rawPrompts.split('\n').filter(p => p.trim() !== "");
+            
+            appendLog(`Mempersiapkan pengiriman ${promptsArray.length} tasks ke Mainnet...`, 'info');
+            dispatchBtn.disabled = true;
+            dispatchBtn.style.opacity = '0.5';
+
+            try {
+                const response = await fetch('/api/v1/agency/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        agency_api_key: key,
+                        prompts: promptsArray
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    appendLog(`✅ Batch Payload Diterima atas nama MCN: ${data.agency}`, 'success');
+                    appendLog(`▶ Dispatched: ${data.dispatched_count} | Backlog: ${data.backlog_count}`, 'warn');
+                    statDispatched.textContent = parseInt(statDispatched.textContent) + data.dispatched_count;
+                    statBacklog.textContent = data.backlog_count;
+                    promptsInput.value = '';
+                } else {
+                    appendLog(`❌ Otentikasi Gagal: ${data.detail}`, 'error');
+                }
+            } catch (err) {
+                appendLog(`❌ Koneksi ke Node Pusat terputus.`, 'error');
+            } finally {
+                dispatchBtn.disabled = false;
+                dispatchBtn.style.opacity = '1';
+            }
+        });
+    </script>
+</body>
+</html>

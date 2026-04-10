@@ -8,6 +8,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import json
 
@@ -120,6 +121,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mounting static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Shared connection manager (diinjeksi ke semua route)
 manager = ConnectionManager()
 app.state.manager = manager
@@ -129,7 +133,7 @@ app.state.manager = manager
 async def get_dashboard(request: Request):
     """Serve the premium monitoring dashboard."""
     return templates.TemplateResponse(
-        "index.html", 
+        "creator/index.html", 
         {
             "request": request, 
             "active_workers": len(request.app.state.manager.active_connections)

@@ -1,0 +1,221 @@
+:root {
+    /* Premium Dark Mode HSL Palette */
+    --bg-base: hsl(230, 25%, 8%);
+    --bg-panel: hsl(230, 20%, 14%);
+    --primary: hsl(265, 89%, 60%);
+    --primary-glow: hsla(265, 89%, 60%, 0.4);
+    --accent: hsl(315, 85%, 60%);
+    --text-main: hsl(220, 10%, 95%);
+    --text-muted: hsl(220, 10%, 70%);
+    --border: hsla(220, 20%, 30%, 0.5);
+    --success: hsl(150, 70%, 50%);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, hsla(315, 85%, 60%, 0.15) 0%, transparent 40%);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Glassmorphism Header */
+header {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(20, 22, 35, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin: 0;
+    background: linear-gradient(135deg, #fff, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.tier-badge {
+    background: linear-gradient(45deg, #ffd700, #ff8c00);
+    color: #000;
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    padding: 3rem 2rem;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+/* Glass Panel Styling */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.panel-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Forms & Inputs */
+textarea, input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    resize: vertical;
+    transition: all 0.2s ease;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.auth-box {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Button Premium */
+.btn-launch {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 20px var(--primary-glow);
+}
+
+.btn-launch:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px var(--primary-glow);
+}
+
+.btn-launch:active {
+    transform: scale(0.98);
+}
+
+/* Progress Dashboard */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.stat-card {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-main);
+}
+
+.value-success { color: var(--success); }
+.value-primary { color: var(--primary); }
+
+/* Status log terminal inside UI */
+.log-window {
+    background: #0d0f15;
+    flex-grow: 1;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--success);
+    overflow-y: auto;
+    max-height: 250px;
+    line-height: 1.6;
+}
+
+.log-entry.error { color: #ff4757; }
+.log-entry.warn { color: #ffa502; }
+
+@media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+}
