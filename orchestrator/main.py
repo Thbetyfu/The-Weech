@@ -130,6 +130,11 @@ app.state.manager = manager
 
 # Routes
 @app.get("/", response_class=HTMLResponse)
+async def get_landing(request: Request):
+    """Serve the mistical landing page."""
+    return templates.TemplateResponse("landing.html", {"request": request})
+
+@app.get("/dashboard", response_class=HTMLResponse)
 async def get_dashboard(request: Request):
     """Serve the premium monitoring dashboard."""
     return templates.TemplateResponse(

@@ -1,0 +1,213 @@
+/* 
+   TheWeech Landing Page - Frame 1 
+   Stitched by Antigravity from Figma Specification
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-web: #FFFCE5; /* Color used in Figma text */
+    --purple-glow: rgba(115, 0, 138, 0.7);
+    --btn-purple-start: #DCB9FF;
+    --btn-purple-end: #9B38FF;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #000;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Base Frame 36 Wrapper */
+.hero-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 1035px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* bg hero dukunkonten 1 */
+.hero-bg {
+    position: absolute;
+    width: 100%;
+    max-width: 1820px;
+    height: 1024px;
+    top: 0;
+    background: url('/static/img/hero_bg.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* Rectangle 2 - Gradient Overlay */
+.hero-overlay {
+    position: absolute;
+    width: 100%;
+    max-width: 1820px;
+    height: 1035px;
+    top: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 70%, #000000 100%);
+    z-index: 2;
+}
+
+/* Frame 30 - Central Content */
+.main-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 40px; /* Adjusted gap for better spacing than Figma absolute 204px */
+    width: 100%;
+    max-width: 721px;
+    margin-top: 178px;
+    filter: drop-shadow(0px 4px 124px var(--purple-glow));
+}
+
+/* Subheader - Frame 31 / Subheader */
+.subheader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 18px;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    backdrop-filter: blur(5px);
+}
+
+.subheader-icon {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-web);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z'/%3E%3C/svg%3E");
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z'/%3E%3C/svg%3E");
+}
+
+.subheader-text {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--primary-web);
+    text-transform: uppercase;
+}
+
+/* Headline Area - Frame 32 */
+.headline-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.headline-text {
+    font-size: 72px;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    color: var(--primary-web);
+    margin: 0;
+}
+
+.headline-text em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.subheadline-text {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--primary-web);
+    opacity: 0.8;
+}
+
+/* Action Area - Action */
+.action-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 89px #280050;
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 477px;
+    height: 66px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0 24px;
+    color: var(--primary-web);
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    outline: none;
+}
+
+.input-field::placeholder {
+    color: rgba(255, 252, 229, 0.4);
+}
+
+/* Generate Button - Frame 33 */
+.btn-generate {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 24px;
+    gap: 8px;
+    height: 100%;
+    background: linear-gradient(180deg, #DCB9FF 0%, #9B38FF 100%);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-generate:hover {
+    filter: brightness(1.1);
+}
+
+.btn-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--primary-web);
+    white-space: nowrap;
+}
+
+.btn-icon {
+    width: 16px;
+    height: 16px;
+    background: var(--primary-web);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'/%3E%3C/svg%3E");
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .headline-text {
+        font-size: 48px;
+    }
+    .action-bar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+    .btn-generate {
+        width: 100%;
+        height: 50px;
+        border-radius: 8px;
+    }
+}

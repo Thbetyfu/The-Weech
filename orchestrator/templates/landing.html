@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheWeech | Ramal Masa Depan Konten Kamu</title>
+    <!-- CSS Terjahit -->
+    <link rel="stylesheet" href="/static/css/landing.css">
+</head>
+<body>
+
+    <div class="hero-wrapper">
+        <!-- Latar Belakang Mistis -->
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+
+        <!-- Konten Utama -->
+        <main class="main-content">
+            
+            <!-- Subheader: Behavioral Projection -->
+            <div class="subheader">
+                <div class="subheader-icon"></div>
+                <span class="subheader-text">TheWeech Behavioral Projection</span>
+            </div>
+
+            <!-- Headline: Aku Biasa Meramal... -->
+            <div class="headline-container">
+                <h1 class="headline-text">
+                    Aku Bisa <em>Meramal</em><br>
+                    Masa Depan <strong>Konten Kamu</strong>
+                </h1>
+                <p class="subheadline-text">
+                    Masukkan video anda untuk memulai ramalan
+                </p>
+            </div>
+
+            <!-- Action: Input Instagram & Button -->
+            <div class="action-bar">
+                <input type="text" class="input-field" placeholder="Link video Instagram" id="link-input">
+                <button class="btn-generate" onclick="startDivination()">
+                    <span class="btn-text">Mulai ramal</span>
+                    <div class="btn-icon"></div>
+                </button>
+            </div>
+
+            <!-- Frame Dekoratif (Optional: Visual Buku ada di BG) -->
+        </main>
+    </div>
+
+    <!-- Script Sederhana untuk Forward ke Dashboard -->
+    <script>
+        function startDivination() {
+            const link = document.getElementById('link-input').value;
+            if (link) {
+                // Simulasi loading sebelum masuk ke dashboard analisis
+                window.location.href = "/dashboard?url=" + encodeURIComponent(link);
+            } else {
+                alert("Masukkan link video Instagram kamu terlebih dahulu!");
+            }
+        }
+    </script>
+</body>
+</html>
