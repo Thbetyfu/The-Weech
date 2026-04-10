@@ -5,11 +5,143 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* Fallback for Clash Grotesk if not hosting local */
+@font-face {
+    font-family: 'Clash Grotesk Variable';
+    src: url('https://fonts.gstatic.com/s/clashgrotesk/v1/...') format('woff2'); /* Placeholder or fallback to Outfit */
+}
+
 :root {
-    --primary-web: #FFFCE5; /* Color used in Figma text */
+    --primary-web: #FFFCE5;
     --purple-glow: rgba(115, 0, 138, 0.7);
-    --btn-purple-start: #DCB9FF;
-    --btn-purple-end: #9B38FF;
+    --btn-purple-start: #8628E3;
+    --btn-purple-end: #4A167D;
+    --clash: 'Outfit', 'Inter', sans-serif; /* Using Outfit as modern high-quality fallback for Clash */
+}
+
+/* Navbar Implementation */
+.navbar {
+    position: absolute;
+    height: 38px;
+    left: 98px;
+    right: 98px;
+    top: 49px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-vector {
+    width: 20px;
+    height: 22px;
+    background: var(--primary-web);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z'/%3E%3C/svg%3E");
+}
+
+.logo-text {
+    font-family: var(--clash);
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+    color: var(--primary-web);
+}
+
+.nav-menus {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 54px;
+}
+
+.nav-link {
+    font-family: var(--clash);
+    font-size: 18px;
+    color: var(--primary-web);
+    text-decoration: none;
+    letter-spacing: -0.03em;
+    opacity: 0.8;
+}
+
+.nav-link:hover {
+    opacity: 1;
+}
+
+.nav-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 28px;
+}
+
+.lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-web);
+    font-family: var(--clash);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.auth-btns {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-login {
+    padding: 8px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    color: var(--primary-web);
+    font-family: var(--clash);
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-login:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-register {
+    display: flex;
+    align-items: center;
+    padding: 8px 9px 8px 22px;
+    gap: 12px;
+    background: var(--primary-web);
+    color: #000;
+    border-radius: 999px;
+    font-family: var(--clash);
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.reg-icon-circle {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(180deg, #8628E3 0%, #4A167D 100%);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reg-icon-circle::after {
+    content: '↗';
+    color: white;
+    font-size: 12px;
 }
 
 body, html {
