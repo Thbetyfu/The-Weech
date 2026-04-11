@@ -343,11 +343,42 @@ body {
     position: relative; width: 882px; height: 816px; margin: 200px auto;
 }
 
-.insight-text-frame { display: flex; flex-direction: column; align-items: flex-start; width: 573px; height: 210px; }
-.insight-embed-top { display: flex; justify-content: center; align-items: center; padding: 20px; width: 573px; height: 164px; background: rgba(39, 39, 39, 0.4); }
-.insight-title-v { font-family: 'Instrument Serif'; font-size: 72px; line-height: 100%; text-align: center; letter-spacing: -0.03em; leading-trim: both; text-edge: cap; }
+.insight-text-frame { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    width: 612px; 
+    height: auto; 
+    gap: 20px;
+}
 
-.insight-embed-bottom { display: flex; justify-content: center; align-items: center; padding: 8px 24px; width: 573px; height: 46px; background: rgba(0, 0, 0, 0.4); }
+.insight-embed-top { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 525px; 
+    height: 124px; 
+}
+
+.insight-title-v { 
+    width: 525px;
+    height: 124px;
+    font-family: 'Instrument Serif'; 
+    font-style: normal;
+    font-weight: 400;
+    font-size: 72px; 
+    line-height: 100%; 
+    text-align: center; 
+    letter-spacing: -0.03em; 
+    color: #FFFCE5;
+    leading-trim: both; 
+    text-edge: cap;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.insight-embed-bottom { display: flex; justify-content: center; align-items: center; padding: 8px 24px; width: auto; height: 46px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; }
 .insight-sub-v { font-family: 'Inter'; font-size: 20px; line-height: 150%; text-align: center; }
 
 .video-frame-279 {
@@ -362,17 +393,64 @@ body {
 
 /* --- FRAME 3: HOW IT WORKS (Frame 40) --- */
 .section-how-40 {
-    display: flex; justify-content: center; align-items: center; padding: 0px 98px; gap: 20px;
-    position: relative; height: 744px; width: 100%; background: #000; border: 1px solid rgba(235, 232, 211, 0.1);
+    position: relative; 
+    height: 744px; 
+    width: 100vw; 
+    left: 50%; 
+    right: 50%; 
+    margin-left: -50vw; 
+    margin-right: -50vw;
+    background: #000; 
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.how-inner-41 { display: flex; justify-content: space-between; align-items: center; width: 1244px; height: 744px; }
-.how-text-content-v { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 24px; width: 612px; height: 374px; z-index: 1; }
-.how-headline-v { font-family: 'Instrument Serif'; font-size: 72px; line-height: 100%; letter-spacing: -0.03em; leading-trim: both; text-edge: cap; }
+.how-inner-41 { display: flex; justify-content: space-between; align-items: center; width: 1244px; height: 744px; position: relative; z-index: 10; }
+
+.how-text-content-v { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 24px; 
+    width: 612px; 
+    height: 374px; 
+    z-index: 1; 
+}
+
+.how-badge-svg { margin-bottom: 8px; }
+
+.how-headline-v { 
+    width: 612px;
+    height: 196px;
+    font-family: 'Instrument Serif';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 100%;
+    leading-trim: both;
+    text-edge: cap;
+    letter-spacing: -0.03em;
+    color: #FFFCE5;
+    flex: none;
+    align-self: stretch;
+    flex-grow: 0;
+}
 .how-desc-v { font-family: 'Inter'; font-size: 20px; line-height: 150%; }
 
-.how-grafis-281 { position: relative; width: 705px; height: 744px; z-index: 0; }
-.how-bg-svg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: url('/static/img/how_it_works_full_bg.svg') no-repeat center; background-size: cover; z-index: -1; }
+.how-grafis-281 { position: relative; width: 705px; height: 744px; z-index: 5; }
+.how-bg-svg { 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0; 
+    background: url('/static/img/how_it_works_full_bg.svg') no-repeat center 90%; 
+    background-size: cover; 
+    z-index: 0; 
+}
 .how-main-image-v { position: absolute; width: 705px; height: 744px; background: url('/static/img/feature_grafis.svg') no-repeat center; background-size: contain; mix-blend-mode: screen; opacity: 0.5; }
 
 .pill-v {
