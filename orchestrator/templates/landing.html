@@ -3,89 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TheWeech | Ramal Masa Depan Konten Kamu</title>
-    <!-- CSS Terjahit -->
-    <link rel="stylesheet" href="/static/css/landing.css">
+    <title>TheWeech - Ramal Masa Depan Konten Kamu</title>
+    <link rel="stylesheet" href="/static/css/landing.css?v=force_final">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:ital,wght@1,500&family=Instrument+Serif&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="hero-wrapper">
-        <!-- Navbar Subframe -->
+    <div class="landing-container">
+        
+        <!-- NAVBAR: Figma Specification v5.0 -->
         <nav class="navbar">
-            <div class="nav-left">
-                <div class="logo-vector"></div>
-                <span class="logo-text">TheWeech</span>
+            <div class="logo-group">
+                <div class="logo-icon-v"></div>
+                <span class="logo-title">TheWeech</span>
             </div>
             
-            <div class="nav-menus">
-                <a href="#" class="nav-link">Beranda</a>
-                <a href="#" class="nav-link">Harga</a>
-                <a href="#" class="nav-link">Tentang</a>
-            </div>
-
-            <div class="nav-actions">
-                <div class="lang-switch">
-                    <span>Bahasa</span>
-                    <svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 6L6 10.5L10.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="menus-buttons">
+                <!-- Menus (284px width, 54px gap) -->
+                <div class="nav-menus">
+                    <a href="#" class="nav-link">Beranda</a>
+                    <a href="#" class="nav-link">Harga</a>
+                    <a href="#" class="nav-link">Tentang</a>
                 </div>
-                <div class="auth-btns">
-                    <a href="#" class="btn-login">Login</a>
-                    <a href="/dashboard" class="btn-register">
-                        <span>Register</span>
-                        <div class="reg-icon-circle"></div>
-                    </a>
+
+                <div class="nav-buttons-group">
+                    <!-- Lang v7.0 -->
+                    <div class="lang-box">
+                        <span class="lang-text-v">Bahasa</span>
+                        <div class="lang-icon-v">
+                            <div class="lang-vector-v"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Frame 29 (Login/Register) -->
+                    <div class="auth-group">
+                        <a href="#" class="btn-login-v">Login</a>
+                        <a href="#" class="btn-register-svg-container">
+                            <img src="/static/img/register_button.svg" alt="Register" style="height: 38px; width: auto;">
+                        </a>
+                    </div>
                 </div>
             </div>
         </nav>
 
-        <!-- Latar Belakang Mistis -->
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
+    <main>
+        <!-- FRAME 1: HERO (Figma: Frame 36) -->
+        <section class="hero-frame-36">
+            <!-- Immersive Background Layers v19.1 -->
+            <div class="hero-bg-image"></div>
+            <div class="hero-gradient-overlay"></div>
 
-        <!-- Konten Utama -->
-        <main class="main-content">
-            
-            <!-- Subheader: Behavioral Projection -->
-            <div class="subheader">
-                <div class="subheader-icon"></div>
-                <span class="subheader-text">TheWeech Behavioral Projection</span>
+            <!-- Frame 30: Centered Content Group -->
+            <div class="hero-frame-30">
+                <!-- Frame 32: Top Badge & Headline -->
+                <div class="hero-frame-32">
+                    <div class="behavioral-badge">
+                        <img src="/static/img/TheWeech Behavioral Projection.svg" alt="TheWeech Behavioral Projection" style="height: 34px; width: auto;">
+                    </div>
+
+                    <!-- Headline: Aku Bisa Meramal... -->
+                    <div class="hero-headline-group">
+                        <h1 class="hero-title">
+                            Aku Bisa <span class="italic-serif">Meramal</span><br>
+                            <span class="italic-serif">Masa Depan</span> Konten Kamu
+                        </h1>
+                        <p class="hero-subtitle">Masukan video dan username anda untuk memulai ramalan</p>
+                    </div>
+                </div>
+
+                <!-- Buku Ajaib / Magic Asset (Overlay) -->
+                <!-- Asumsi feature_grafis.svg di Hero adalah representasi Buku Ajaib sesuai gambar referensi Professor -->
+                <div class="hero-book-aura"></div>
+
+                <!-- Frame 55: Action Card -->
+                <div class="hero-frame-55">
+                    <div class="action-card-v">
+                        <input type="text" class="input-instagram-v" placeholder="Link video Instagram">
+                        <div class="btn-purple-container">
+                            <!-- Asset Mastery v15.0 -->
+                            <img src="/static/img/MulaiRamal.svg" alt="Mulai ramal" class="btn-svg-ramal">
+                        </div>
+                    </div>
+                    <!-- Footer: Embed Layout -->
+                    <div class="action-footer-embed">
+                        <p class="action-footer-text">
+                            Belum upload video? <a href="#" class="consult-link">Langsung Konsultasi Aja</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 2: INSIGHTS (Figma Frame 42) -->
+        <section class="section-insights-42">
+            <!-- Vertical Rail (The Thread) -->
+            <div class="vertical-ray"></div>
+
+            <div class="insight-text-frame">
+                <div class="insight-embed-top">
+                    <h2 class="insight-title-v">Kami membaca arah,<br>sebelum kamu tersesat</h2>
+                </div>
+                <div class="insight-embed-bottom">
+                    <p class="insight-sub-v">TheWeech mencegah kamu berjalan ke arah kesesatan</p>
+                </div>
             </div>
 
-            <!-- Headline: Aku Biasa Meramal... -->
-            <div class="headline-container">
-                <h1 class="headline-text">
-                    Aku Bisa <em>Meramal</em><br>
-                    Masa Depan <strong>Konten Kamu</strong>
-                </h1>
-                <p class="subheadline-text">
-                    Masukkan video anda untuk memulai ramalan
-                </p>
+            <div class="video-frame-279">
+                <video class="insights-video-v" autoplay muted loop playsinline>
+                    <source src="/static/vid/Pidio_TheWeech.mp4" type="video/mp4">
+                </video>
             </div>
+        </section>
 
-            <!-- Action: Input Instagram & Button -->
-            <div class="action-bar">
-                <input type="text" class="input-field" placeholder="Link video Instagram" id="link-input">
-                <button class="btn-generate" onclick="startDivination()">
-                    <span class="btn-text">Mulai ramal</span>
-                    <div class="btn-icon"></div>
-                </button>
+        <!-- FRAME 3: HOW IT WORKS (Figma Frame 40) -->
+        <section class="section-how-40">
+            <div class="how-inner-41">
+                <div class="how-text-content-v">
+                    <div class="subheader-pill-v" style="width: fit-content;">
+                        <img src="/static/img/logo.svg" alt="Icon" style="width:20px;">
+                        <span style="font-family:'Inter'; font-size:20px; font-weight:500;">Bagaimana TheWeech Bekerja?</span>
+                    </div>
+                    <h2 class="how-headline-v">Behavioral Projection berbasis Pattern Recognition</h2>
+                    <p class="how-desc-v">
+                        TheWeech memprediksi masa depan kreator dengan membaca pola konten saat ini, 
+                        lalu memproyeksikan konsekuensi yang biasanya terjadi pada kreator dengan pola serupa.
+                    </p>
+                </div>
+
+                <!-- Grafis 281 with Floating Pills -->
+                <div class="how-grafis-281">
+                    <div class="how-bg-svg"></div> <!-- how_it_works_full_bg.svg -->
+                    <div class="how-main-image-v"></div> <!-- feature_grafis.svg (Logo Aura) -->
+                    
+                    <div class="pill-v pill-fast-v">
+                        <span class="pill-txt-v">✅ Proses produksi lebih cepat</span>
+                    </div>
+                    <div class="pill-v pill-consistent-v">
+                        <span class="pill-txt-v">✅ Konten lebih konsisten & terarah</span>
+                    </div>
+                    <div class="pill-v pill-improved-v">
+                        <span class="pill-txt-v">✅ Tahu apa yang perlu diperbaiki</span>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <!-- Frame Dekoratif (Optional: Visual Buku ada di BG) -->
-        </main>
     </div>
 
-    <!-- Script Sederhana untuk Forward ke Dashboard -->
-    <script>
-        function startDivination() {
-            const link = document.getElementById('link-input').value;
-            if (link) {
-                // Simulasi loading sebelum masuk ke dashboard analisis
-                window.location.href = "/dashboard?url=" + encodeURIComponent(link);
-            } else {
-                alert("Masukkan link video Instagram kamu terlebih dahulu!");
-            }
-        }
-    </script>
 </body>
 </html>
