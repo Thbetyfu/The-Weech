@@ -1058,3 +1058,207 @@ body {
 
 /* Import Figtree for final polish */
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&display=swap');
+/* --- FRAME 6: FINAL CTA (PRO SPECIFICATION) --- */
+.frame-6 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 92px 0 425px 0;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+    height: 810px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 62.22%, #000000 100%), 
+                url('../img/how_it_works_full_bg.svg') no-repeat center top;
+    background-size: cover;
+    margin-top: 100px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.f6-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 51px;
+    width: 832px;
+    z-index: 2;
+}
+
+/* Subheader Capsule (Precision Typography) */
+.f6-badge {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 24px;
+    width: auto;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+}
+
+.f6-badge-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    color: #FFFCE5; /* Matching SVG color */
+    white-space: nowrap;
+}
+
+/* Headline Frame 32 */
+.f6-headline-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 20px;
+    width: 100%;
+}
+
+.f6-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 110%;
+    text-align: center;
+    color: #FFFCE5;
+    margin: 0;
+}
+
+/* CTA Button Frame 33 */
+.f6-btn-join {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 32px;
+    gap: 12px;
+    width: 279px;
+    height: 50px;
+    background: linear-gradient(180deg, #1D1D1D 50.48%, #4E0068 100%);
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.33);
+    border-radius: 39px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+}
+
+.f6-btn-join:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(78, 0, 104, 0.4);
+}
+
+.f6-btn-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+}
+
+/* --- FRAME 50: GRAND FOOTER (VIBRANT PURPLE) --- */
+.footer-frame-50 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px 87px;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+    height: 387px;
+    background: linear-gradient(180deg, rgba(74, 22, 125, 0) 0%, #8628E3 100%);
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-top: -100px; /* Overlap with Frame 6 transition */
+}
+
+/* Background Watermark Text */
+.footer-watermark {
+    position: absolute;
+    width: 100%;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 350px;
+    line-height: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.08); /* Transparent effect */
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.footer-content-v {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;
+    padding-bottom: 80px;
+    z-index: 2;
+}
+
+.footer-links-group {
+    display: flex;
+    flex-direction: row;
+    gap: 64px;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer-col-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.5); /* Faded white for headers */
+    margin-bottom: 8px;
+}
+
+.footer-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.footer-link:hover {
+    opacity: 0.7;
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.footer-copyright {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-location {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #FFFFFF;
+}

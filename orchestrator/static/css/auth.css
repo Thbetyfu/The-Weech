@@ -1,0 +1,203 @@
+/* --- THE WEECH: AUTHENTICATION STYLES --- */
+:root {
+    --primary-purple: #8628E3;
+    --dark-bg: #000000;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-cream: #FFFCE5;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-bg);
+    font-family: 'Inter', sans-serif;
+    color: #FFFFFF;
+    overflow: hidden;
+}
+
+.auth-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('../img/hero_bg.svg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background Dimmer/Overlay */
+.auth-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+/* Frame 302: Main Layout */
+.auth-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row; /* Default: Left (Brand) | Right (Form) */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    padding: 0 87px;
+    z-index: 2;
+    transition: flex-direction 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Layout Swap Logic (Handled by Physical HTML Order) */
+.auth-wrapper.swap {
+    flex-direction: row; /* Keeping it standard row because HTML is already swapped */
+}
+
+/* Morphing Animation: Cinematic & Slow */
+.auth-fade-in {
+    animation: authSlideIn 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes authSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px); /* More dramatic travel */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.auth-wrapper.swap .auth-fade-in {
+    animation: authSlideInReverse 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes authSlideInReverse {
+    from {
+        opacity: 0;
+        transform: translateX(-100px); /* More dramatic travel */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Frame 295: Register Form */
+.register-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 48px;
+    gap: 32px;
+    width: 470px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-sizing: border-box;
+}
+
+.auth-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    line-height: 100%;
+    color: var(--text-cream);
+    margin: 0;
+}
+
+.auth-subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+/* Form Elements */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.input-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.auth-input {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary-purple);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.auth-footer {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-link {
+    color: var(--primary-purple);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Side Illustration (Placeholder for Design Continuity) */
+.auth-side-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.logo-large {
+    font-family: 'Instrument Serif', serif;
+    font-size: 84px;
+    color: white;
+    font-style: italic;
+}

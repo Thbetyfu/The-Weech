@@ -134,6 +134,27 @@ async def get_landing(request: Request):
     """Serve the mistical landing page."""
     return templates.TemplateResponse("landing.html", {"request": request})
 
+@app.get("/register", response_class=HTMLResponse)
+async def get_register(request: Request):
+    """Serve the high-fidelity registration page."""
+    return templates.TemplateResponse("auth/register.html", {"request": request})
+
+@app.post("/register")
+async def post_register(request: Request):
+    """Handle registration logic (Placeholder)."""
+    # Logic for DB registration will go here
+    return {"status": "success", "message": "Account created (Simulated)"}
+
+@app.get("/login", response_class=HTMLResponse)
+async def get_login(request: Request):
+    """Serve the mirrored login page."""
+    return templates.TemplateResponse("auth/login.html", {"request": request})
+
+@app.post("/login")
+async def post_login(request: Request):
+    """Handle login logic (Placeholder)."""
+    return {"status": "success", "message": "Logged in (Simulated)"}
+
 @app.get("/dashboard", response_class=HTMLResponse)
 async def get_dashboard(request: Request):
     """Serve the premium monitoring dashboard."""

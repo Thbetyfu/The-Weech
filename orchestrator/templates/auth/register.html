@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join TheWeech | The Future of Creator DNA</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../../static/css/auth.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-overlay"></div>
+        
+        <div class="auth-wrapper">
+            <!-- Left Side: Branding/Aura -->
+            <div class="auth-side-brand">
+                <span class="logo-large">TheWeech</span>
+                <div class="auth-header">
+                    <h1 class="auth-title">Mulailah Membangun<br>DNA Kreator Anda.</h1>
+                    <p class="auth-subtitle">Masuki ekosistem AI yang dirancang khusus untuk<br>memperkuat keaslian dan jangkauan konten Anda.</p>
+                </div>
+            </div>
+
+            <!-- Right Side: Frame 295 (Register Form) -->
+            <div class="register-card auth-fade-in">
+                <div class="auth-header">
+                    <h2 class="auth-title" style="font-size: 32px;">Daftar Akun</h2>
+                    <p class="auth-subtitle">Bergabunglah dengan ribuan kreator masa depan.</p>
+                </div>
+
+                <form action="/register" method="POST" style="width: 100%; display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Email Field -->
+                    <div class="input-group">
+                        <label class="input-label" for="email">ALAMAT EMAIL</label>
+                        <input type="email" id="email" name="email" class="auth-input" placeholder="name@example.com" required>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="input-group">
+                        <label class="input-label" for="password">PASSWORD</label>
+                        <input type="password" id="password" name="password" class="auth-input" placeholder="••••••••" required>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="input-group">
+                        <label class="input-label" for="confirm_password">KONFIRMASI PASSWORD</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="auth-input" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="auth-btn">Mulai Bersama TheWeech</button>
+                    
+                    <div class="auth-footer">
+                        Sudah punya akun? <a href="login.html" class="auth-link">Masuk Sekarang</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Micro-interactions Script -->
+    <script>
+        document.querySelectorAll('.auth-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.style.borderColor = '#8628E3';
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.parentElement.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            });
+        });
+    </script>
+</body>
+</html>

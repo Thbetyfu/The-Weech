@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TheWeech Creator HQ</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../../static/css/auth.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-overlay"></div>
+        
+        <div class="auth-wrapper swap">
+            <!-- LEFT SIDE: Login Form (Physically Swapped to Left) -->
+            <div class="register-card auth-fade-in">
+                <div class="auth-header">
+                    <h2 class="auth-title" style="font-size: 32px;">Masuk</h2>
+                    <p class="auth-subtitle">Kelola DNA Kreator Anda di dashboard.</p>
+                </div>
+
+                <form action="/login" method="POST" style="width: 100%; display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Email Field -->
+                    <div class="input-group">
+                        <label class="input-label" for="email">ALAMAT EMAIL</label>
+                        <input type="email" id="email" name="email" class="auth-input" placeholder="name@example.com" required>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="input-group">
+                        <label class="input-label" for="password">PASSWORD</label>
+                        <input type="password" id="password" name="password" class="auth-input" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="auth-btn">Masuk Ke Kendali</button>
+                    
+                    <div class="auth-footer">
+                        Belum punya akun? <a href="register.html" class="auth-link">Daftar Sekarang</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RIGHT SIDE: Branding/Aura (Physically Swapped to Right) -->
+            <div class="auth-side-brand" style="text-align: right; align-items: flex-end;">
+                <span class="logo-large">TheWeech</span>
+                <div class="auth-header" style="align-items: flex-end;">
+                    <h1 class="auth-title" style="text-align: right;">Selamat Datang<br>Kembali, Master.</h1>
+                    <p class="auth-subtitle" style="text-align: right;">Lanjutkan pekerjaan AI Anda<br>dan pantau performa Worker Anda.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
